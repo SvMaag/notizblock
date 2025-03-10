@@ -16,7 +16,7 @@ function renderNotes(){
 };
 
 function getNoteTempate(note){
-    return `<p>+ ${note}</p>`;
+    return `<p>+ ${note}<button>X</button></p>`;
 }
 
 // global speichern
@@ -31,9 +31,15 @@ function addNote(){
     notes.push(noteInput);
     // eingabe anzeigen lassen
     renderNotes();
-
+    noteInputRef.value = "";
+    
 }
 
 // notizen löschen
+    //welche Notiz muss gelöscht werden
+function deleteNote(indexNote){
+    notes.splice(indexNote, 1);
+}
+    //wann muss die Notziz gelöscht werden
 
 //nozizen archivieren
