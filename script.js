@@ -2,9 +2,10 @@
 // ich bruache notizen
 let notesTitle = ['BA','Aufgabe'];
 let notes = ['banana','rasen mähen'];
-//-> wann werden sie angezeigt?
+let trashNotesTitles = [];
 let trashNotes = [];
 
+//-> wann werden sie angezeigt?
 function renderNotes(){
 // ich muss definieren wo sie anzuzeigen sind
     let contentRef = document.getElementById('content')
@@ -12,7 +13,6 @@ function renderNotes(){
     for (let indexNote = 0; indexNote < notes.length; indexNote++) {
         contentRef.innerHTML += getNoteTempate(indexNote);
     }
-
 };
 
 
@@ -34,7 +34,7 @@ function getNoteTempate(indexNote){
 
 
 function getTrashNoteTempate(indexTrashNote){
-    return `<p>+ ${trashNotes[indexTrashNote]}<button onclick="deleteNote(${indexTrashNote})">X</button></p>`;
+    return `<p>+ ${trashNotesTitles[indexTrashNote]} -> ${trashNotes[indexTrashNote]} <button onclick="deleteNote(${indexTrashNote})">X</button></p>`;
 };  
 
 // global speichern
@@ -45,23 +45,31 @@ function addNote(){
      //eingabe auslesen
     let noteInputRef = document.getElementById('note_input');
     let noteInput = noteInputRef.value;
+    let noteTitleInputRef = document.getElementById('note_titelinput');
+    let noteTitleInput = noteTitleInputRef.value;
     //eingabe den Notizen hinzufügen
+    notesTitle.push(noteTitleInput);
     notes.push(noteInput);
     // eingabe anzeigen lassen
     renderNotes();
-    noteInputRef.value = "";
-    
+    noteTitleInputRef.value = "";
+    noteInputRef.value = "";  
 }
 
 // notizen löschen
     //welche Notiz muss gelöscht werden
 function deleteNote(indexNote){
     let trashNote = notes.splice(indexNote, 1)[0];
+    let trashNoteTitle = notesTitle.splice(indexNote, 1)[0];
     trashNotes.push(trashNote);
+    trashNotesTitles.push(trashNoteTitle);
     //wann muss die Notziz gelöscht werden
    renderNotes();
    renderTrashNotes();
 }
-    
 
+
+
+//Loade Data first open side
+loadFromLocalStorage();
 //nozizen archivieren
