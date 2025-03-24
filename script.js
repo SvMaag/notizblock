@@ -1,7 +1,7 @@
 // notizen anzeigen lassen
 // ich bruache notizen
-let notesTitle = ['BA','Aufgabe'];
-let notes = ['banana','rasen mähen'];
+let notesTitle = [];
+let notes = [];
 let trashNotesTitles = [];
 let trashNotes = [];
 
@@ -43,15 +43,16 @@ function getTrashNoteTempate(indexTrashNote){
      // eingabe von user definieren
 function addNote(){
      //eingabe auslesen
+    let noteTitleInputRef = document.getElementById('note_titleinput');
+    let noteTitleInput = noteTitleInputRef.value;
     let noteInputRef = document.getElementById('note_input');
     let noteInput = noteInputRef.value;
-    let noteTitleInputRef = document.getElementById('note_titelinput');
-    let noteTitleInput = noteTitleInputRef.value;
     //eingabe den Notizen hinzufügen
     notesTitle.push(noteTitleInput);
     notes.push(noteInput);
     // eingabe anzeigen lassen
     renderNotes();
+    saveNotesToLocalStorage();
     noteTitleInputRef.value = "";
     noteInputRef.value = "";  
 }
@@ -64,11 +65,22 @@ function deleteNote(indexNote){
     trashNotes.push(trashNote);
     trashNotesTitles.push(trashNoteTitle);
     //wann muss die Notziz gelöscht werden
-   renderNotes();
-   renderTrashNotes();
+    renderNotes();
+    renderTrashNotes();
+    saveNotesToLocalStorage(); // Notizen speichern
+    saveTrashToLocalStorage(); // Papierkorb speichern
 }
 
+function saveNotesToLocalStorage(){
+    localStorage.setItem("notes",JSON.stringify(notes));
+    localStorage.setItem("notesTitles", JSON.stringify(notesTitle));
+}
 
+function saveTrashToLocalStorage() {
+    localStorage.setItem("trash",JSON.stringify(trash))
+    localStorage.setItem("trashTitles", JSON.stringify(trashNotesTitles));
+
+}
 
 //Loade Data first open side
 loadFromLocalStorage();
